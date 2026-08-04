@@ -1,6 +1,6 @@
 // src/app/router.jsx
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { AuthLayout, CreateInventory, CreateOrder, CreateProvider,CreateMenu } from '@/shared';
+import { AuthLayout, CreateInventory, CreateOrder, CreateProvider,CreateMenu, Login } from '@/shared';
 
 const router = createBrowserRouter([
   {
@@ -11,7 +11,7 @@ const router = createBrowserRouter([
   
   // --- MÓDULO: INVENTARIO ---
   {
-    path: "/crear-inventario", 
+    path: "/create-inventory", 
     element: <CreateInventory />,
     children: [
       { index: true },
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
 
   // --- MÓDULO: ÓRDENES ---
   {
-    path: "/crear-orden", 
+    path: "/create-order", 
     element: <CreateOrder />,
     children: [
       { index: true },
@@ -49,6 +49,15 @@ const router = createBrowserRouter([
   {
     path: "/auth",
     element: <AuthLayout />,
+    children: [
+      { index: true },
+    ],
+  },
+
+  // Login
+  {
+    path: "/login",
+    element: <Login />,
     children: [
       { index: true },
     ],

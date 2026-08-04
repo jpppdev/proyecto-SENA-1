@@ -111,7 +111,7 @@ export default function UserRegisterForm() {
           name="productName"
           type="text"
           value={formData.productName}
-          placeholder="Ej. Shampoo Anticaspa 400ml"
+          placeholder="Ej. Caldo de Pescado"
           htmlFor="productName"
           onChange={handleChange}
           error={errors.productName}

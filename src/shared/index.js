@@ -6,6 +6,7 @@ export { default as CreateInventory } from './layouts/CreateInventory';
 export { default as CreateOrder } from './layouts/CreateOrder';
 export { default as CreateProvider } from './layouts/CreateProvider';
 export { default as CreateMenu } from './layouts/CreateMenu';
+export { default as Login } from './layouts/Login';
 
 // Componentes UI
 export { default as Input } from './components/Input';

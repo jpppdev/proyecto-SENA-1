@@ -3,12 +3,13 @@ export default function Button ({
     variant = "primary",
     size = "md",
     type = "button",
+    className = "",
     children,
     ...props
 }){
 
     const variants = {
-        primary : "bg-border text-text-inverse hover:bg-brand-hover",
+        primary : "bg-border text-text-inverse gibg-brand-hover",
         secondary : "border-2 border-border  text-text-primary hover:bg-brand-soft-hover"
     };
 
@@ -31,6 +32,7 @@ export default function Button ({
                 transition-colors
                 ${variants[variant]}
                 ${sizes[size]}
+                ${className}
                 `}
                 {...props}
             >
