@@ -3,12 +3,26 @@ import { Input, Button } from "@/shared";
 import restaurante from "../../assets/images/Img-Restaurante.jpeg";
 import logo from "../../assets/images/Img-Login.jpeg";
 import title from "../../assets/images/Img-Titulo.png"
+import { z } from "zod";
+
+const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, "El correo es obligatorio")
+    .email("Correo inválido"),
+
+  password: z
+    .string()
+    .min(1, "La contraseña es obligatoria"),
+});
 
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setFormData({
@@ -19,6 +33,15 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+     const result = loginSchema.safeParse(formData);
+
+  if (!result.success) {
+    setErrors(result.error.flatten().fieldErrors);
+    return;
+  }
+
+  setErrors({});
 
     console.log(formData);
   };
@@ -69,6 +92,12 @@ function Login() {
             onChange={handleChange}
           />
 
+            {errors.email && (
+         <p className="text-red-500 text-xs">
+             {errors.email[0]}
+         </p>
+      )}
+        <div className="mt-5">
           <Input
             htmlFor="password"
             name="password"
@@ -79,6 +108,13 @@ function Login() {
             onChange={handleChange}
         />
 
+           {errors.password && (
+        <p className="text-red-500 text-xs">
+            {errors.password[0]}
+        </p>
+      )}
+        </div>
+
           <Button
             type="submit"
             className="mt-6 w-full cursor-pointer"
@@ -88,14 +124,14 @@ function Login() {
 
           <p className="text-center mt-6 text-sm">
             ¿Aún no tienes una cuenta?{" "}
-            <span className="font-semibold cursor-pointer">
+            <span className="font-semibold text-xs cursor-pointer">
               Regístrate
             </span>
           </p>
 
           <div
             type="button"
-            className="text-center mt-6 font-semibold cursor-pointer"
+            className="text-center mt-6 font-semibold text-sm cursor-pointer"
           >
             <p>¿Olvidaste tu contraseña?</p>
             

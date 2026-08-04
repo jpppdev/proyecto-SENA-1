@@ -54,7 +54,6 @@ export default function Input({
                 className={` 
                     block
                     font-semibold 
-                    mb-1
                     text-secondary
 
                     ${labelSizes[size]}
@@ -68,7 +67,7 @@ export default function Input({
                     }
 
                     {/* 🔥 2. ELIMINAMOS "text-caption" de aquí para que deje de bloquear los tamaños */}
-                    ${error ? "text-red-800" : ""}
+                    ${error ? "text-red-800 mt-1" : ""}
                     `}>
                     {label}
 
