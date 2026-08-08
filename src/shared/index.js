@@ -29,3 +29,5 @@ export {
 } from "./components/Dropdown";
 
 export { default as Navbar } from "./layouts/Navbar";
+export { default as Home } from "./layouts/Home";
+export { default as Products } from "./layouts/Products";

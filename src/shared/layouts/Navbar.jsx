@@ -9,7 +9,7 @@ import {
   DropdownItem,
   SearchField,
 } from "@/shared";
-import  logo  from "@/assets/images/bg-1.png";
+import  logo  from "@/assets/images/Img-Titulo.png";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar(){
@@ -35,7 +35,7 @@ export default function Navbar(){
             {/* Logo de marca */}
             <div className=" hidden sm:block items-center">
               <Link to="/dashboard" className="text-h1 font-heading">
-                <img src={logo} alt="logo" className="h-12" />
+                <img src={logo} alt="logo" className="h-24" />
               </Link>
             </div>
 
@@ -106,7 +106,9 @@ export default function Navbar(){
                   <DropdownContent>
 
                     <DropdownItem>
-                      Gestion de Productos
+                      <Link to="/products" className="block w-full"
+                      > Gestion de Productos
+                       </Link>
                     </DropdownItem>
 
                     <DropdownItem>
@@ -121,7 +123,8 @@ export default function Navbar(){
                     </DropdownItem>
 
                     <DropdownItem>
-                      Cerrar Sesión
+                      <Link to="/login" className="block w-full"> Cerrar Sesión
+                      </Link>
                     </DropdownItem>
 
                   </DropdownContent>

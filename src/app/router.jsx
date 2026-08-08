@@ -1,6 +1,6 @@
 // src/app/router.jsx
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { AuthLayout, CreateInventory, CreateOrder, CreateProvider,CreateMenu, Login } from '@/shared';
+import { AuthLayout, CreateInventory, CreateOrder, CreateProvider,CreateMenu, Login, Home, Products } from '@/shared';
 import DashboardLayout from "@/shared/layouts/DashboardLayout";
 
 const router = createBrowserRouter([
@@ -45,6 +45,16 @@ const router = createBrowserRouter([
   {
     path: "/add-menu", 
     element: <CreateMenu />,
+  },
+
+  {
+    path: "/home", 
+    element: <Home />,
+  },
+
+  {
+    path: "/products", 
+    element: <Products />,
   }
     ],
   },
@@ -68,7 +78,7 @@ const router = createBrowserRouter([
     children: [
       { index: true },
     ],
-  }
+  },
 ]);
 
 export default router;

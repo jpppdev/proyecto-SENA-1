@@ -8,8 +8,7 @@ import { z } from "zod";
 const loginSchema = z.object({
   email: z
     .string()
-    .min(1, "El correo es obligatorio")
-    .email("Correo inválido"),
+    .min(1, "El correo es obligatorio"),
 
   password: z
     .string()
@@ -78,7 +77,7 @@ function Login() {
             className="w-32 mx-auto mb-6"
           />
 
-          <h1 className="text-3xl font-bold text-center mb-6">
+          <h1 className="text-main font-heading text-center mb-6">
             Bienvenido
           </h1>
 
@@ -90,13 +89,9 @@ function Login() {
             placeholder="Ingresa tu correo"
             value={formData.email}
             onChange={handleChange}
+            error={errors.email}
           />
 
-            {errors.email && (
-         <p className="text-red-500 text-xs">
-             {errors.email[0]}
-         </p>
-      )}
         <div className="mt-5">
           <Input
             htmlFor="password"
@@ -105,33 +100,31 @@ function Login() {
             label="Contraseña"
             placeholder="Ingresa tu contraseña"
             value={formData.password}
-            onChange={handleChange}
+            onChange={handleChange} 
+            error={errors.password}          
         />
 
-           {errors.password && (
-        <p className="text-red-500 text-xs">
-            {errors.password[0]}
-        </p>
-      )}
         </div>
 
           <Button
+            className="mt-6"
+            variant="primary"
             type="submit"
-            className="mt-6 w-full cursor-pointer"
+            size="md"
           >
             Iniciar Sesión
           </Button>
 
-          <p className="text-center mt-6 text-sm">
+          <p className="text-center mt-6 text-medium">
             ¿Aún no tienes una cuenta?{" "}
-            <span className="font-semibold text-xs cursor-pointer">
+            <span className="font-semibold cursor-pointer text-medium">
               Regístrate
             </span>
           </p>
 
           <div
             type="button"
-            className="text-center mt-6 mb-6 font-semibold text-sm cursor-pointer"
+            className="text-center mt-6 mb-6 font-semibold text-medium cursor-pointer"
           >
             <p>¿Olvidaste tu contraseña?</p>
             
