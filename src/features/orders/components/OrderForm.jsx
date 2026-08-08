@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
 import { Input, Select, Button } from "@/shared";
 import { orderSchema } from "../schemas/orderSchema";
 import { getWaiters, getDishes, getOrderStatuses } from "@/services/orderService";
@@ -60,7 +61,11 @@ export default function OrderForm() {
   };
 
   return (
+
+    
+
     <div className="bg-background rounded-2xl shadow-lg p-8">
+      
       <h1 className="text-display font-heading text-primary mb-2">
         Crear Orden
       </h1>
@@ -150,6 +155,14 @@ export default function OrderForm() {
           <Button type="submit" variant="primary">
             Guardar Orden
           </Button>
+
+           <main className="mx-auto">
+
+                    
+                    {/* < UserRegisterForm /> */}
+                    < Outlet />
+                </main>
+
         </div>
       </form>
     </div>

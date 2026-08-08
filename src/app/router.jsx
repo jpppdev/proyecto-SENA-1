@@ -1,49 +1,54 @@
 // src/app/router.jsx
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { AuthLayout, CreateInventory, CreateOrder, CreateProvider,CreateMenu, Login } from '@/shared';
+import DashboardLayout from "@/shared/layouts/DashboardLayout";
 
 const router = createBrowserRouter([
   {
     // Ruta por defecto 
     path: '/',
-    element: <Navigate to="/crear-inventario" replace />,
+    element: <Navigate to="/create-inventory" replace />,
   },
+  
+  {
+    element: <DashboardLayout/>,
+    children: [
   
   // --- MÓDULO: INVENTARIO ---
   {
     path: "/create-inventory", 
     element: <CreateInventory />,
-    children: [
-      { index: true },
-    ],
+    
+      
+    
   },
 
   // --- MÓDULO: ÓRDENES ---
   {
     path: "/create-order", 
     element: <CreateOrder />,
-    children: [
-      { index: true },
-    ],
+    
+      
+    
   },
 
   // --- MÓDULO: PROVEEDORES ---
   {
-    path: "/crear-proveedor", 
+    path: "/create-provider", 
     element: <CreateProvider />,
-    children: [
-      { index: true },
-    ],
+     
+      
+    
   },
 
 // --- MÓDULO: MENÚ ---
   {
-    path: "/agregar-menu", 
+    path: "/add-menu", 
     element: <CreateMenu />,
-    children: [
-      { index: true },
+  }
     ],
   },
+
 
   // --- MÓDULO: AUTENTICACIÓN ---
   {
@@ -53,6 +58,8 @@ const router = createBrowserRouter([
       { index: true },
     ],
   },
+
+
 
   // Login
   {

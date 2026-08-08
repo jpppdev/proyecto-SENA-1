@@ -131,7 +131,7 @@ function Login() {
 
           <div
             type="button"
-            className="text-center mt-6 font-semibold text-sm cursor-pointer"
+            className="text-center mt-6 mb-6 font-semibold text-sm cursor-pointer"
           >
             <p>¿Olvidaste tu contraseña?</p>
             

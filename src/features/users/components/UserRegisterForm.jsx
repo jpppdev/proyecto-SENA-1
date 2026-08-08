@@ -71,6 +71,8 @@ export default function UserRegisterForm() {
 
   return (
     <div className="bg-background rounded-2xl shadow-lg p-8">
+
+
       <h1 className="text-display font-heading text-primary mb-2">
         Crear Inventario
       </h1>

@@ -17,4 +17,15 @@ export { default as EffectDemo } from './components/EffectDemo';
 export { default as CounterEffect } from './components/CounterEffect';
 export { default as Select } from './components/Select';
 export { default as Checkbox } from './components/Checkbox';
+export { default as SearchField } from './components/SearchField';
+export { default as IconButton } from './components/IconButton';
 // Agrega aquí cualquier otro componente de UI que necesites exportar
+
+export { 
+    Dropdown,
+    DropdownTrigger, 
+    DropdownItem,
+    DropdownContent,
+} from "./components/Dropdown";
+
+export { default as Navbar } from "./layouts/Navbar";
