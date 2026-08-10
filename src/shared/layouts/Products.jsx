@@ -139,7 +139,7 @@ export default function ProductList() {
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => console.log("Editar:", product.id)}
+                onClick={() => alert("Producto editado correctamente")}
               >
                 <Pencil />
               </Button>
@@ -147,7 +147,7 @@ export default function ProductList() {
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => console.log("Eliminar:", product.id)}
+                onClick={() => alert("Producto eliminado correctamente")}
               >
                 <Trash2 />
               </Button>
