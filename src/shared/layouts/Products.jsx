@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input, Button } from "@/shared";
 import { useNavigate } from "react-router-dom";
-import { Pencil, Trash2} from "lucide-react"
+import { Pencil, Trash2 } from "lucide-react";
 
 export default function ProductList() {
   const navigate = useNavigate();
@@ -40,17 +40,14 @@ export default function ProductList() {
   );
 
   return (
-    <div className="bg-background rounded-2xl p-8">
-
-      {/* ENCABEZADO */}
+    <section>
       <div className="flex items-center justify-between mb-8">
-
         <div>
-          <h1 className="text-display ml-40 font-heading text-primary-700">
+          <h1 className="text-display ml-40 font-heading text-brand">
             Productos
           </h1>
 
-          <p className="ml-40 text-sm mt-2">
+          <p className="ml-40 text-body mt-2 text-text-secondary">
             Inventario &gt; Productos
           </p>
         </div>
@@ -63,12 +60,9 @@ export default function ProductList() {
         >
           Crear producto
         </Button>
-
       </div>
 
-      {/* BUSCADOR */}
       <div className="mb-8 ml-40 max-w-md">
-
         <Input
           label="Buscar producto"
           name="search"
@@ -77,121 +71,90 @@ export default function ProductList() {
           placeholder="Ej. Salmón"
           onChange={(e) => setSearch(e.target.value)}
         />
-
       </div>
 
-      {/* TABLA */}
-      <div className="overflow-x-auto">
+      <div className="mx-40">
+        <div className="grid grid-cols-7 bg-brand text-text-inverse">
+          <div className="p-4 text-left text-medium">
+            ID
+          </div>
 
-        <table className="w-full border-collapse">
+          <div className="p-4 text-left text-medium">
+            Producto
+          </div>
 
-          <thead>
-            <tr className="bg-primary-700 text-white">
+          <div className="p-4 text-left text-medium">
+            Marca
+          </div>
 
-              <th className="p-4 text-left">
-                ID
-              </th>
+          <div className="p-4 text-left text-medium">
+            Cantidad
+          </div>
 
-              <th className="p-4 text-left">
-                Producto
-              </th>
+          <div className="p-4 text-left text-medium">
+            Precio
+          </div>
 
-              <th className="p-4 text-left">
-                Marca
-              </th>
+          <div className="p-4 text-left text-medium">
+            Estado
+          </div>
 
-              <th className="p-4 text-left">
-                Cantidad
-              </th>
+          <div className="p-4 text-center text-medium">
+            Acciones
+          </div>
+        </div>
 
-              <th className="p-4 text-left">
-                Precio
-              </th>
+        {filteredProducts.map((product) => (
+          <div
+            key={product.id}
+            className="grid grid-cols-7 border-b border-border hover:bg-brand-soft transition"
+          >
+            <div className="p-4 text-body">
+              {product.id}
+            </div>
 
-              <th className="p-4 text-left">
-                Estado
-              </th>
+            <div className="p-4 text-body font-semibold">
+              {product.name}
+            </div>
 
-              <th className="p-4 text-center">
-                Acciones
-              </th>
+            <div className="p-4 text-body">
+              {product.brand}
+            </div>
 
-            </tr>
-          </thead>
+            <div className="p-4 text-body">
+              {product.quantity}
+            </div>
 
-          <tbody>
+            <div className="p-4 text-body">
+              ${product.price.toLocaleString("es-CO")}
+            </div>
 
-            {filteredProducts.map((product) => (
+            <div className="p-4 text-body">
+              <span className="px-3 py-1 rounded-full text-medium bg-brand-soft text-brand">
+                {product.status}
+              </span>
+            </div>
 
-              <tr
-                key={product.id}
-                className="border-b border-border hover:bg-primary-50 transition"
+            <div className="p-4 flex justify-center gap-2">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => console.log("Editar:", product.id)}
               >
+                <Pencil />
+              </Button>
 
-                <td className="p-4">
-                  {product.id}
-                </td>
-
-                <td className="p-4 font-semibold">
-                  {product.name}
-                </td>
-
-                <td className="p-4">
-                  {product.brand}
-                </td>
-
-                <td className="p-4">
-                  {product.quantity}
-                </td>
-
-                <td className="p-4">
-                  ${product.price.toLocaleString("es-CO")}
-                </td>
-
-                <td className="p-4">
-                  <span className="px-3 py-1 rounded-full text-body bg-primary-100 text-primary-800">
-                    {product.status}
-                  </span>
-                </td>
-
-                <td className="p-4">
-
-                  <div className="flex justify-center gap-2">
-
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() =>
-                        console.log("Editar:", product.id)
-                      }
-                    >
-                      <Pencil/>
-                    </Button>
-
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() =>
-                        console.log("Eliminar:", product.id)
-                      }
-                    >
-                      <Trash2/>
-                    </Button>
-
-                  </div>
-
-                </td>
-
-              </tr>
-
-            ))}
-
-          </tbody>
-
-        </table>
-
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => console.log("Eliminar:", product.id)}
+              >
+                <Trash2 />
+              </Button>
+            </div>
+          </div>
+        ))}
       </div>
-
-    </div>
+    </section>
   );
 }
