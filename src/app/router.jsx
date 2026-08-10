@@ -1,6 +1,6 @@
 // src/app/router.jsx
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { AuthLayout, CreateInventory, CreateOrder, CreateProvider,CreateMenu, Login, Home, Products } from '@/shared';
+import { AuthLayout, CreateInventory, CreateOrder, CreateProvider,CreateMenu, Login, Home, Products, ForgotPassword, Register } from '@/shared';
 import DashboardLayout from "@/shared/layouts/DashboardLayout";
 
 const router = createBrowserRouter([
@@ -68,6 +68,17 @@ const router = createBrowserRouter([
       { index: true },
     ],
   },
+
+  {
+  path: "/forgot-password",
+  element: <ForgotPassword />,
+},
+  
+
+{
+  path: "/register",
+  element: <Register />,
+},
 
 
 

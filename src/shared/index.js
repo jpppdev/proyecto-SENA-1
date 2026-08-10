@@ -30,4 +30,6 @@ export {
 
 export { default as Navbar } from "./layouts/Navbar";
 export { default as Home } from "./layouts/Home";
+export { default as ForgotPassword } from "./layouts/ForgotPassword";
 export { default as Products } from "./layouts/Products";
+export { default as Register } from "./layouts/Register";

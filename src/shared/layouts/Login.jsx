@@ -114,13 +114,16 @@ function Login() {
 
           <p className="text-body text-text-primary text-center mt-6">
             ¿Aún no tienes una cuenta?{" "}
-            <span className="text-medium font-semibold cursor-pointer text-brand">
+            <span className="text-medium font-semibold cursor-pointer text-brand"
+            onClick={() => navigate("/register")}>
               Regístrate
             </span>
           </p>
 
           <div className="text-center mt-6 mb-6">
-            <p className="text-medium font-semibold cursor-pointer text-brand">
+            <p className="text-medium font-semibold cursor-pointer text-brand"
+            onClick={() => navigate("/forgot-password")}>
+              
               ¿Olvidaste tu contraseña?
             </p>
           </div>
