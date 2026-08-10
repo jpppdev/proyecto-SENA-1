@@ -1,7 +1,8 @@
 // src/app/router.jsx
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { AuthLayout, CreateInventory, CreateOrder, CreateProvider,CreateMenu } from '@/shared';
-
+import { AuthLayout,DashboardLayout, CreateInventory, CreateOrder, CreateProvider,CreateMenu } from '@/shared';
+import { UserList, UserRegisterForm ,UserViews } from "@/features/users";
+import { MenuList,MenuViews} from "@/features/menu";
 const router = createBrowserRouter([
   {
     // Ruta por defecto 
@@ -17,6 +18,20 @@ const router = createBrowserRouter([
       { index: true },
     ],
   },
+    // --- MÓDULO: USUARIO ---
+  {
+    path: "/dashboard", 
+    element: <DashboardLayout />,
+    children: [
+      { index: true },
+      { path: "userList", element: <UserList />},
+          { path: "userCreate", element: <UserRegisterForm />},
+          { path: "userView/:id", element: <UserViews /> },
+          { path: "userEdit/:id", element: <UserRegisterForm /> }
+         
+    ],
+  },
+  
 
   // --- MÓDULO: ÓRDENES ---
   {
@@ -42,6 +57,8 @@ const router = createBrowserRouter([
     element: <CreateMenu />,
     children: [
       { index: true },
+      { path: "menuView/:id", element: <MenuViews /> }, 
+      { path: "menuList/:id", element: <MenuList /> }, 
     ],
   },
 

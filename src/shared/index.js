@@ -6,6 +6,8 @@ export { default as CreateInventory } from './layouts/CreateInventory';
 export { default as CreateOrder } from './layouts/CreateOrder';
 export { default as CreateProvider } from './layouts/CreateProvider';
 export { default as CreateMenu } from './layouts/CreateMenu';
+export { default as CreateUser } from './layouts/CreateUser';
+export { default as DashboardLayout } from './layouts/DashboardLayout';
 
 // Componentes UI
 export { default as Input } from './components/Input';
@@ -16,4 +18,7 @@ export { default as EffectDemo } from './components/EffectDemo';
 export { default as CounterEffect } from './components/CounterEffect';
 export { default as Select } from './components/Select';
 export { default as Checkbox } from './components/Checkbox';
+export {default as StatusSwitch} from "./components/StatusSwitch";
+export {default as DataTable} from "./components/DataTable";
+export {default as SearchField} from "./components/SearchField"
 // Agrega aquí cualquier otro componente de UI que necesites exportar
