@@ -58,7 +58,7 @@ const router = createBrowserRouter([
     children: [
       { index: true },
       { path: "menuView/:id", element: <MenuViews /> }, 
-      { path: "menuList/:id", element: <MenuList /> }, 
+      { path: "menuList", element: <MenuList /> }, 
     ],
   },
 

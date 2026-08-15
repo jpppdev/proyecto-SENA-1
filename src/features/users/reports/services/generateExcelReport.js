@@ -1,16 +1,12 @@
 ﻿// Libreria para manipulacion y generacion de archivos Excel
 import * as XLSX from "xlsx";
 
-// Funcion utilitaria para generar un archivo Excel a partir de datos tabulares
-// Patron: exportacion de datos (dataset -> archivo descargable)
+
 export function generateExcelReport({
   headers, // Array de encabezados (columnas)
   rows, // Array de filas (array de arrays)
   fileName = "user-report.xlsx", // Nombre del archivo de salida
 }) {
-  // Estructura final de la hoja:
-  // Primera fila = headers
-  // Siguientes filas = datos
   const worksheetData = [
     headers,
     ...rows,

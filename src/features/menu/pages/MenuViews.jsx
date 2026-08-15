@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/shared";
 import { Clock, Flame, Info, Utensils, AlertTriangle, Box } from "lucide-react";
 
-// Mock de datos (temporal hasta que conectes tu archivo de datos real)
+
 const mockMenus = [
   {
     id: "MN-001",
@@ -26,7 +26,7 @@ export default function MenuView() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Buscamos el menú. Si no lo encuentra, mostramos el primero por defecto para probar el diseño.
+ 
   const menu = mockMenus.find((m) => m.id === id) || mockMenus[0];
 
   return (
@@ -109,7 +109,7 @@ export default function MenuView() {
 
         {/* BOTONES */}
         <div className="flex justify-end border-t border-gray-400/30 pt-6">
-          <Button onClick={() => navigate("/dashboard/menuList")} variant="secondary" size="lg" className="rounded-full px-8 shadow-sm">
+          <Button onClick={() => navigate("/menuList")} variant="secondary" size="lg" className="rounded-full px-8 shadow-sm">
             Volver a la lista
           </Button>
         </div>

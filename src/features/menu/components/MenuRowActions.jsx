@@ -7,7 +7,7 @@ export default function MenuRowActions({ menu }) {
   return (
     <div className="flex gap-2">
       <button 
-        onClick={() => navigate(`/dashboard/menuView/${menu.id}`)} 
+        onClick={() => navigate(`/agregar-menu/menuView/${menu.id}`)} 
         className="p-1 rounded hover:bg-gray-100 text-blue-600"
         title="Visualizar"
       >

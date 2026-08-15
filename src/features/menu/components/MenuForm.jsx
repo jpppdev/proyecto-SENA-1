@@ -31,11 +31,11 @@ export default function MenuForm() {
   };
 
   return (
-    /* CONTENEDOR ENVOLVENTE PARA CENTRADO ABSOLUTO */
+   
     <div className="flex items-center justify-center w-full min-h-[85vh] p-4">
       
       {/* TARJETA DEL FORMULARIO */}
-      <div className="w-full max-w-[1200px] p-10 bg-white/30 backdrop-blur-xl border border-white/40 rounded-[32px] shadow-2xl">
+    <div className="w-full max-w-[1200px] h-fit p-10 bg-white/30 backdrop-blur-xl border border-white/40 rounded-[32px] shadow-2xl">
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           
           {/* CONTENEDOR GRID PRINCIPAL */}
