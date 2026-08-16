@@ -1,183 +1,86 @@
-import { useState, useEffect } from "react";
-import { Input, Select, Checkbox, Button } from "@/shared";
-import { Link } from "react-router-dom";
-import { menuSchema } from "../schemas/menuSchema";
-import { getCategories } from "@/services/menuService";
+import { useState } from "react";
+import { UploadCloud } from "lucide-react";
+import { Input, Select, Button } from "@/shared"; 
 
 export default function MenuForm() {
   const [formData, setFormData] = useState({
-    dishName: "",
-    price: "",
-    image: null,
-    category: "",
-    description: "",
-    isActive: true, 
+    id: "",
+    nombre: "",
+    categoria: "",
+    precio: "",
+    ingredientes: "",
+    tiempoPrep: "",
+    calorias: "",
+    descuento: "",
+    estado: "",
+    proveedor: "",
+    stock: "",
+    alergenos: "",
+    turno: "",
+    notas: "",
   });
 
-  const [categoryOptions, setCategoryOptions] = useState([]);
-  const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    
-    getCategories().then(setCategoryOptions);
-  }, []);
-
   const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "file" ? files[0] : type === "checkbox" ? checked : value,
-    }));
-    
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: null }));
-    }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const validation = menuSchema.safeParse(formData);
-
-    if (!validation.success) {
-      const formattedErrors = {};
-      validation.error.issues.forEach((issue) => {
-        formattedErrors[issue.path[0]] = issue.message;
-      });
-      setErrors(formattedErrors);
-      return;
-    }
-
-    console.log("Datos del platillo a enviar:", formData);
-    alert("Platillo registrado correctamente");
-    setErrors({});
+    console.log("Datos del menú a guardar:", formData);
   };
 
   return (
-    <div className="bg-background rounded-2xl shadow-lg p-8">
-      <h1 className="text-display font-heading text-primary mb-2">
-        Agregar Platillo
-      </h1>
-      <p className="text-text-muted mb-8 text-sm">
-        Menú &gt; Crear nuevo platillo
-      </p>
-      <h2 className="text-title font-heading mb-8">
-        Información del Platillo
-      </h2>
+   
+    <div className="flex items-center justify-center w-full min-h-[85vh] p-4">
+      
+      {/* TARJETA DEL FORMULARIO */}
+    <div className="w-full max-w-[1200px] h-fit p-10 bg-white/30 backdrop-blur-xl border border-white/40 rounded-[32px] shadow-2xl">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+          
+          {/* CONTENEDOR GRID PRINCIPAL */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-min">
+            
+            {/* --- FILA 1 (4 campos) --- */}
+            <Input label="1. ID Menú" name="id" value={formData.id} onChange={handleChange} placeholder="Ej. MN-001" />
+            <Input label="Nombre del Plato" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Ej. Hamburguesa" />
+            <Select label="Categoría" name="categoria" value={formData.categoria} onChange={handleChange} options={[{ label: "Principal", value: "principal" }, { label: "Bebida", value: "bebida" }, { label: "Postre", value: "postre" }]} />
+            <Input label="Precio" name="precio" value={formData.precio} onChange={handleChange} placeholder="$ 0.00" type="number" />
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-8">
-        
-        {/* 1. Nombre del platillo */}
-        <Input
-          label="1. Nombre del platillo *"
-          name="dishName"
-          type="text"
-          value={formData.dishName}
-          placeholder="Ej. Hamburguesa Doble Carne"
-          htmlFor="dishName"
-          onChange={handleChange}
-          error={errors.dishName}
-        />
+            {/* --- FILA 2 y 3: Caja de Imagen (ocupa 2 filas de alto) --- */}
+            <div className="md:col-span-1 md:row-span-2 relative flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-500/50 rounded-2xl bg-white/20 hover:bg-white/40 transition-all duration-300 cursor-pointer min-h-[180px]">
+              <input type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*" />
+              <UploadCloud size={48} className="text-gray-700 mb-3" />
+              <span className="text-sm font-medium text-gray-800 text-center">
+                Subir Imagen del Plato
+              </span>
+            </div>
 
-        {/* 2. Precio */}
-        <Input
-          label="2. Precio *"
-          name="price"
-          type="number"
-          value={formData.price}
-          placeholder="Ej. 25000"
-          htmlFor="price"
-          onChange={handleChange}
-          error={errors.price}
-          min="0"
-        />
+            {/* --- FILA 2 (3 campos a la derecha) --- */}
+            <Input label="Ingredientes" name="ingredientes" value={formData.ingredientes} onChange={handleChange} placeholder="Ej. Carne, pan..." />
+            <Input label="Tiempo (min)" name="tiempoPrep" value={formData.tiempoPrep} onChange={handleChange} placeholder="Ej. 15" type="number" />
+            <Input label="Calorías" name="calorias" value={formData.calorias} onChange={handleChange} placeholder="Ej. 450" type="number" />
 
-        {/* 3. Imagen del platillo (Estilo arrastrar y soltar) */}
-        <div className="col-span-2 md:col-span-1 row-span-2">
-          <label className="block mb-2 font-medium text-text-main">
-            3. Imagen del platillo (Opcional)
-          </label>
-          <label className="border-2 border-dashed border-gray-300 rounded-xl h-48 flex flex-col items-center justify-center cursor-pointer text-center hover:bg-gray-50 transition-colors">
-           
-            <span className="text-primary text-sm mt-1">
-              PNG, JPG o WEBP
-            </span>
-            <input
-              type="file"
-              name="image"
-              onChange={handleChange}
-            />
-          </label>
-          {formData.image && (
-            <p className="text-sm text-green-600 mt-2">
-              Archivo seleccionado: {formData.image.name}
-            </p>
-          )}
-        </div>
+            {/* --- FILA 3 (3 campos a la derecha) --- */}
+            <Input label="Descuento (%)" name="descuento" value={formData.descuento} onChange={handleChange} placeholder="0" type="number" />
+            <Select label="Estado" name="estado" value={formData.estado} onChange={handleChange} options={[{ label: "Disponible", value: "disponible" }, { label: "Agotado", value: "agotado" }]} />
+            <Input label="Proveedor" name="proveedor" value={formData.proveedor} onChange={handleChange} placeholder="Opcional" />
 
-        {/* 4. Categoría (Con enlace para crear nueva) */}
-        <div className="flex flex-col">
-          <div className="flex justify-between items-end mb-1">
-            <label className="font-medium text-text-main">
-              4. Categoría *
-            </label>
-            <Link 
-              to="/crear-categoria" 
-              className="text-sm text-primary hover:underline"
-            >
-              + Crear categoría
-            </Link>
+            {/* --- FILA 4 (4 campos inferiores) --- */}
+            <Input label="Stock" name="stock" value={formData.stock} onChange={handleChange} placeholder="Ej. 20" type="number" />
+            <Input label="Alergenos" name="alergenos" value={formData.alergenos} onChange={handleChange} placeholder="Ej. Gluten" />
+            <Select label="Turno" name="turno" value={formData.turno} onChange={handleChange} options={[{ label: "Desayuno", value: "desayuno" }, { label: "Almuerzo", value: "almuerzo" }, { label: "Todo el día", value: "todo" }]} />
+            <Input label="Notas" name="notas" value={formData.notas} onChange={handleChange} placeholder="Instrucciones..." />
           </div>
-          <Select
-            name="category"
-            value={formData.category}
-            htmlFor="category"
-            options={categoryOptions}
-            onChange={handleChange}
-            error={errors.category}
-            label="" /* El label lo manejamos arriba para poder poner el enlace al lado */
-          />
-        </div>
 
-        {/* 5. Descripción */}
-        <div className="flex flex-col">
-          <label htmlFor="description" className="font-medium text-text-main mb-2">
-            5. Descripción *
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            rows="3"
-            value={formData.description}
-            onChange={handleChange}
-            placeholder="Describe los ingredientes y detalles del platillo..."
-            className={`w-full border rounded-lg p-3 bg-white focus:ring-2 focus:ring-primary outline-none resize-none ${errors.description ? 'border-red-500' : 'border-gray-300'}`}
-          />
-          {errors.description && <span className="text-red-500 text-sm mt-1">{errors.description}</span>}
-        </div>
-
-        {/* 6. Estado */}
-        <div className="col-span-2 flex items-center pt-2">
-          <Checkbox
-            id="isActive"
-            name="isActive"
-            label="Platillo Habilitado (Activo en el menú)"
-            checked={formData.isActive}
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* Botones */}
-        <div className="col-span-2 flex justify-end gap-4 mt-6">
-          <Button variant="secondary" type="button" onClick={() => console.log("Cancelar")}>
-            Cancelar
-          </Button>
-          <Button type="submit" variant="primary">
-            Guardar Platillo
-          </Button>
-        </div>
-      </form>
+          {/* BOTÓN DE ACCIÓN */}
+          <div className="flex justify-end mt-2">
+            <Button type="submit" variant="primary" size="lg" className="w-48 rounded-full shadow-lg bg-blue-600 hover:bg-blue-700 text-white font-bold tracking-wide">
+              Guardar Menú
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
