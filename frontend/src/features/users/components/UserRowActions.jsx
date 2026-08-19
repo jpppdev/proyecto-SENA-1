@@ -35,31 +35,24 @@ export default function UserRowActions({ user }) {
   };
 
 
-  return (
-    // Contenedor de los botones de acciones
+ return (
     <div className="flex gap-2">
-
-
-      {/* Botón editar */}
-      <button
-        onClick={handleEdit} // Ejecuta la navegación a la página de edición
-        className="p-1 rounded hover:bg-gray-100"
-      >
-        <Pencil size={16} /> {/* Icono de editar */}
+      {/* Botón Visualizar (Ojo) */}
+      <button onClick={handleView} className="p-1 rounded hover:bg-gray-100 text-blue-600">
+        <Eye size={16} /> 
+      </button>
+      
+      {/* Botón Editar (Lápiz) ---> AQUÍ CONECTAMOS LA FUNCIÓN */}
+      <button onClick={handleEdit} className="p-1 rounded hover:bg-gray-100 text-orange-500">
+        <Pencil size={16} /> 
       </button>
 
-
-      {/* Botón eliminar */}
-      <button
-        onClick={handleDelete} // Ejecuta la acción de eliminación
-        className="p-1 rounded hover:bg-gray-100"
-      >
-        <Eye size={16} /> {/* Icono de eliminar */}
+      {/* Botón Eliminar (Cambié el icono a Trash para que tenga sentido) */}
+      <button onClick={handleDelete} className="p-1 rounded hover:bg-gray-100 text-red-600">
+        <Trash size={16} /> 
       </button>
-
-
     </div>
-  );
+  )
 }
 
 

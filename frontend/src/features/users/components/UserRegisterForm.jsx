@@ -16,7 +16,7 @@ import {    Input,
 import { getDocumentTypes } from "@/services/selectService";
 import { useNavigate} from "react-router-dom";
 import {userSchema} from "../schemas/userSchema";
-import { User, Calendar } from "lucide-react";
+import { UserPlus, Calendar, ArrowLeft, Check } from "lucide-react";
 
 
 
@@ -157,170 +157,257 @@ export default function UserRegisterForm (){
     //     }
     // };
 
-return(
-        <div className="grid items-center justify-center">
-            <h1 className="mx-auto my-12 text-title font-heading font-bold ">
-                Registro de usuarios</h1>
-            {/* Formulario*/}
-            <form 
-                action=""
-                onSubmit={handleSubmit}
-            >
+ return (
+    
+    <div className=
+          "relative flex w-full max-w-[1200px] min-h-[700px] bg-[var(--color-background)] rounded-[28px] shadow-md overflow-hidden mx-auto border border-[var(--color-border-strong)]">
+      
+      {/* 3. CAPA DE ÉXITO (OVERLAY) */}
+      {isSuccess && (
+        <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/40 backdrop-blur-md transition-all duration-300">
+          
+          {/* Círculo amarillo claro con el icono */}
+          <div className="w-32 h-32 bg-[#FFEBA4] rounded-full flex items-center justify-center mb-6 shadow-lg relative">
+            {/* Icono de usuario */}
+            <UserPlus className="w-16 h-16 text-[#FFAE00]" />
+            {/* Pequeño badge de "Check" (chulito) encima del usuario */}
+            <div className=
+                    "absolute bottom-4 right-4 bg-[#FFAE00] rounded-full p-1 border-4 border-[#FFEBA4]">
+               <Check className="w-5 h-5 text-white" strokeWidth={3} />
+            </div>
+          </div>
 
-                  <Input
-                    label="Nombre"
-                    name="userName"
-                    type="text"
-                    value={FormData.userName}
-                    placeholder="Escribe tu nombre"
-                    htmlFor="user-name"
-                    onChange={handleChange}
-                    error={errors.userName}
-            />
-            <Input
-                    label="Correo"
-                    name="userEmail"
-                    type="email"
-                     value={FormData.userEmail}
-                    placeholder="Escribe tu correo electronico"
-                    htmlFor="user-email"
-                    onChange={handleChange}
-                    error={errors.userEmail}
-            />
-            <Input
-                    label="Telefono"
-                    name="userPhone"
-                    type="tel"
-                    value={FormData.userPhone}
-                    placeholder="Escribe tu numero de telefono"
-                    htmlFor="user-phone"
-                    onChange={handleChange}
-                    error={errors.userPhone}
-            />
+          {/* Texto de éxito idéntico al diseño */}
+          <h2 className=
+                "text-white text-2xl font-serif italic tracking-wide drop-shadow-md">
+                El usuario ha sido creado con éxito
+          </h2>
+        </div>
+      )}
 
-            <Select
-                    label="Tipo de documento"
-                    name="userDocumentTypes"
-                    value={FormData.userDocumentTypes}
-                    htmlFor="userDocumentTypes"
-                    options={documentTypes}
-                    onChange={handleChange}
-                    error={errors.userDocumentTypes}
-            />
-             <Input
-                    label="Documento"
-                    name="userDocumentNumber"
-                    type="text"
-                    value={FormData.userDocumentNumber}
-                    placeholder="Escribe tu numero de documento"
-                    htmlFor="user-document-number"
-                    onChange={handleChange}
-                    error={errors.userDocumentNumber}
-            />
-             <Input
-                    label="Contraseña"
-                    name="userPassword"
-                    type="password"
-                    value={FormData.userPassword}
-                    placeholder="Escribe tu contraseña"
-                    htmlFor="user-password"
-                    onChange={handleChange}
-                    error={errors.userPassword}
-                    />
-
-                    {/*Checkbox*/}
-            <div className="grid gap-4 my-2">
-                <Checkbox
-                    id="isSuperUser"
-                    name="isSuperUser"
-                    label="Es super usuario"
-                    checked = {FormData.isSuperUser}
-                    onChange={handleChange}
-                />
-                <Checkbox
-                    id="isStaff"
-                    name="isStaff"
-                    label="Es staff"
-                    checked = {FormData.isStaff}
-                    onChange={handleChange}
-                />
-                <Checkbox
-                    id="isActive"
-                    name="isActive"
-                    label="Esta activo"
-                    checked = {FormData.isActive}
-                    onChange={handleChange}
-                />
-
-                <div>
-                    <h2>Cantidad maxima de archivos: 12</h2>
-                    <h3>Peso maximo: 10MB</h3>
-                </div>
-
-
+     
+      {/* --- COLUMNA IZQUIERDA (Sidebar Naranja) --- */}
+      <div className="w-1/4 bg-[var(--color-secondary-500)] flex flex-col items-center justify-between py-12 px-6">
+  
+        {/* Contenedor del Avatar usando FileInput */}
+            <div className="w-32 h-32 bg-[var(--color-background)] rounded-full flex items-center justify-center shadow-sm overflow-hidden border-4 border-white">
                 <FileInput 
-                    value={FormData.userImage}
-                    onChange={(files) => 
-                    setFormData((prev) => ({ ...prev, userImage: files }))
-                    }
-                    multiple={true}
+                value={formData.userImage}
+                onChange={(files) => setFormData(prev => ({ ...prev, userImage: files }))}
+                multiple={false}
+                accept="image/jpeg, image/jpg, image/png, image/webp"
                 />
-                {errors.userImgae && (
-                    <span className="text-red-500 text-sm">{errors.userImage}</span>
-            )}
-
+            </div>
+  
+            <button
+             type="button"
+            onClick={() => navigate(-1)}
+            className="flex flex-col items-center text-[var(--color-text-inverse)] font-[var(--font-weight-heading)] text-[var(--text-subtitle)] hover:opacity-90 transition-opacity"
+            >
+            <ArrowLeft className="w-10 h-10 mb-2" />
             
+                 Regresar
+             </button>
+        </div>
 
+      {/* --- ÁREA DEL FORMULARIO --- */}
+      <div className=
+            "w-3/4 p-10 py-12 bg-[var(--color-background)]">
+        <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between">
+          
+          <div className="grid grid-cols-3 gap-8">
+            
+            {/* 1: PERSONALES */}
+            <div className="space-y-6">
+              <h3 className=
+                    "text-[var(--text-subtitle)] font-[var(--font-weight-heading)] text-[var(--color-text-muted)] flex items-center gap-3 mb-6 uppercase">
+                <span className=
+                    "bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] rounded-full w-8 h-8 flex items-center justify-center text-[var(--text-small)] shadow-sm">
+                    1
+                </span> 
+                Personales
+              </h3>
+              <Input 
+                  variant="primary" 
+                  size="md" 
+                  label="Nombres" 
+                  htmlFor="nombres" 
+                  name="nombres" 
+                  value={formData.nombres} 
+                  onChange={handleChange} 
+                  error={errors.nombres} 
+                  placeholder="Ingresa tu Nombre" />
+              <Input 
+                variant="primary"
+                size="md" 
+                label="Apellidos" 
+                tmlFor="apellidos" 
+                name="apellidos" 
+                value={formData.apellidos} 
+                onChange={handleChange} 
+                error={errors.apellidos} 
+                placeholder="Enter your apellidos here" />
+              <Select 
+                label="Tipo de Documento" 
+                htmlFor="tipoDocumento" 
+                name="tipoDocumento" 
+                value={formData.tipoDocumento} 
+                onChange={handleChange} 
+                error={errors.tipoDocumento} 
+              options={[{ label: "Cédula", value: "cc" }, { label: "Pasaporte", value: "pasaporte" }]} />
+              <Input 
+                variant="primary" 
+                size="md" 
+                label="Número de Documento" 
+                htmlFor="numeroDocumento" 
+                name="numeroDocumento" 
+                value={formData.numeroDocumento} 
+                onChange={handleChange} 
+                error={errors.numeroDocumento} 
+                placeholder="Enter your numero de documento" />
+              <Input 
+                variant="primary" 
+                size="md" 
+                label="Correo Electrónico" 
+                htmlFor="correo" 
+                name="correo" 
+                type="email" 
+                value={formData.correo} 
+                onChange={handleChange} 
+                error={errors.correo} 
+                placeholder="Enter your correo electronico" />
+              </div>
+
+            {/* 2: EMPRESARIALES */}
+            <div className="space-y-6">
+              <h3 className=
+                    "text-[var(--text-subtitle)] font-[var(--font-weight-heading)] text-[var(--color-text-muted)] flex items-center gap-3 mb-6 uppercase">
+                <span className=
+                        "bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] rounded-full w-8 h-8 flex items-center justify-center text-[var(--text-small)] shadow-sm">
+                        2
+                </span> 
+                Empresariales
+              </h3>
+              <Input 
+                  variant="primary" 
+                  size="md" 
+                  label="Correo Empresarial" 
+                  htmlFor="correoEmpresarial" 
+                  name="correoEmpresarial" 
+                  type="email" 
+                  value={formData.correoEmpresarial} 
+                  onChange={handleChange} 
+                  error={errors.correoEmpresarial} 
+                  placeholder="Enter your Full Name here" />
+              <Input 
+                  variant="primary" 
+                  size="md" 
+                  label="Número Telefónico" 
+                  htmlFor="telefono" 
+                  name="telefono" 
+                  value={formData.telefono} 
+                  onChange={handleChange} 
+                  error={errors.telefono} 
+                  placeholder="Enter your Full Name here" />
+              <Input 
+                variant="primary" 
+                size="md" 
+                label="Fecha Inicio Laboral" 
+                htmlFor="fechaInicio" 
+                name="fechaInicio" 
+                type="date" 
+                value={formData.fechaInicio} 
+                onChange={handleChange} 
+                error={errors.fechaInicio} 
+                placeholder="Enter your Full Name here" />
+              <Input 
+                variant="primary" 
+                size="md" 
+                label="Fecha Fin Laboral"
+                htmlFor="fechaFin" 
+                name="fechaFin" 
+                type="date" 
+                value={formData.fechaFin} 
+                onChange={handleChange} 
+                error={errors.fechaFin} 
+                placeholder="Enter your Full Name here" />
+              <Input 
+                variant="primary" 
+                size="md" 
+                label="Dirección" 
+                htmlFor="direccion" 
+                name="direccion" 
+                value={formData.direccion} 
+                onChange={handleChange} 
+                error={errors.direccion} 
+                placeholder="Enter your Full Name here" />
             </div>
 
+            {/* 3: SENSIBLES */}
+            <div className="space-y-6">
+              <h3 className=
+                  "text-[var(--text-subtitle)] font-[var(--font-weight-heading)] text-[var(--color-text-muted)] flex items-center gap-3 mb-6 uppercase">
+                <span className=
+                  "bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] rounded-full w-8 h-8 flex items-center justify-center text-[var(--text-small)] shadow-sm">3
+                </span> 
+                Sensibles
+              </h3>
+              <Input 
+                variant="primary" 
+                size="md" 
+                label="Estado" 
+                htmlFor="estado" 
+                name="estado" 
+                value={formData.estado} 
+                onChange={handleChange} 
+                rror={errors.estado} 
+                placeholder="Enter your Full Name here" />
+              <Select 
+                label="Tipo de Usuario" 
+                htmlFor="tipoUsuario" 
+                name="tipoUsuario" 
+                value={formData.tipoUsuario} 
+                onChange={handleChange} 
+                error={errors.tipoUsuario} 
+                options={[{ label: "Administrador", value: "admin" }, { label: "Empleado", value: "employee" }]} />
+              <Input 
+                variant="primary" 
+                size="md" 
+                label="ID Usuario" 
+                htmlFor="idUsuario" 
+                name="idUsuario" 
+                value={formData.idUsuario} 
+                onChange={handleChange} 
+                error={errors.idUsuario} 
+                placeholder="Enter your Full Name here" />
+              <Input 
+                variant="primary" 
+                size="md" 
+                label="Contraseña" 
+                htmlFor="contrasena" 
+                name="contraseña" 
+                type="password" 
+                value={formData.contrasena} 
+                onChange={handleChange} 
+                error={errors.contrasena} 
+                placeholder="Ingrese su Contraseña" />
+            </div>
             
-            
+          </div>
 
+          <div className="flex justify-end mt-8">
+            <Button 
+            type="submit" 
+            variant="primary" 
+            size="md" 
+            className=
+              "w-40 shadow-sm rounded-full bg-[var(--color-secondary-500)] hover:bg-[var(--color-secondary-600)] border-none">
+              GUARDAR
+            </Button>
+          </div>
 
-            {/* Actions */}
-                <div className="flex gap-6 items-center">
-
-                    <Button
-                        variant="secondary"
-                        size="sm"
-                        type="button"
-                        onClick={() => {navigate(-1)}}
-                    >
-                     Cancelar
-                    </Button>
-
-
-                    {/* <Button
-                        
-                        variant="primary"
-                        size="md"
-                        type="submit"
-                        onClick={() => {console.log("Se oprimió el submit")}}
-                    >
-                     Guardar
-                    </Button> */}
-
-                     <Button
-                        
-                        variant="secundy"
-                        size="md"
-                        type="submit"
-                        disabled={isSubmitting}
-                       
-                    >
-                     {isSubmitting ? "guardando..." : "guardar"}
-                    </Button>
-                  
-                </div>
-                
-                {/* IconButton de ejemplo */}
-                <User/>
-                <Calendar/>
-                  
-          </form>
-        </div>
-    );
+        </form>
+      </div>
+    </div>
+  );
 }
-
-
-
