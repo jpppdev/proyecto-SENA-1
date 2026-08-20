@@ -1,5 +1,5 @@
 // Iconos usados en los botones de acciones
-import { Pencil, Eye } from "lucide-react";
+import { Pencil, Eye , Trash} from "lucide-react";
 
 
 // Hook de React Router para navegar programáticamente entre rutas
@@ -26,6 +26,9 @@ export default function UserRowActions({ user }) {
     navigate(`/users/${user.id}/edit`);
   };
 
+  const handleView = () => {
+    navigate(`/dashboard/userView/${user.id}`);
+  };
 
   // Acción para eliminar el usuario
   // Actualmente solo imprime en consola el id

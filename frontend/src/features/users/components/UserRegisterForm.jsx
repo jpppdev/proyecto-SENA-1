@@ -5,7 +5,6 @@ import {    Input,
             Button, 
             // DeleteCounter2,
             Select, 
-            Checkbox, 
             // IconButton,
             // Dropdown,
             // DropdownTrigger,
@@ -16,7 +15,7 @@ import {    Input,
 import { getDocumentTypes } from "@/services/selectService";
 import { useNavigate} from "react-router-dom";
 import {userSchema} from "../schemas/userSchema";
-import { UserPlus, Calendar, ArrowLeft, Check } from "lucide-react";
+import { UserPlus, Calendar, ArrowLeft, Check, User } from "lucide-react";
 
 
 
@@ -29,7 +28,7 @@ export default function UserRegisterForm (){
 
         //Estado
         const [isSubmitting, setIsSubmitting] = useState(false);
-
+        const [isSuccess, setIsSuccess] = useState(false);
         //Navegacion
         const navigate = useNavigate();
 
@@ -37,7 +36,7 @@ export default function UserRegisterForm (){
          const [errors, setErrors] = useState({})
 
         // Estado del formulario 
-        const [FormData, setFormData] =  useState({
+        const [formData, setFormData] =  useState({
             userName: "",
             userEmail: "",
             userPhone: "",
@@ -159,249 +158,273 @@ export default function UserRegisterForm (){
 
  return (
     
-    <div className=
-          "relative flex w-full max-w-[1200px] min-h-[700px] bg-[var(--color-background)] rounded-[28px] shadow-md overflow-hidden mx-auto border border-[var(--color-border-strong)]">
+   <div 
+    className={`
+      /* 1. Layout y Posicionamiento */
+      relative flex mx-auto mt-12
       
-      {/* 3. CAPA DE ÉXITO (OVERLAY) */}
+      /* 2. Dimensiones */
+      w-full max-w-[1200px] min-h-[700px]
+      
+      /* 3. Apariencia (Fondo, Bordes y Sombras) */
+      bg-[var(--color-background)] 
+      border border-[var(--color-border-strong)]
+      rounded-[28px] shadow-md overflow-hidden
+     `}
+  >
+      
+      {/* --- CAPA DE ÉXITO (OVERLAY) --- */}
       {isSuccess && (
         <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/40 backdrop-blur-md transition-all duration-300">
           
-          {/* Círculo amarillo claro con el icono */}
-          <div className="w-32 h-32 bg-[#FFEBA4] rounded-full flex items-center justify-center mb-6 shadow-lg relative">
-            {/* Icono de usuario */}
-            <UserPlus className="w-16 h-16 text-[#FFAE00]" />
-            {/* Pequeño badge de "Check" (chulito) encima del usuario */}
-            <div className=
-                    "absolute bottom-4 right-4 bg-[#FFAE00] rounded-full p-1 border-4 border-[#FFEBA4]">
-               <Check className="w-5 h-5 text-white" strokeWidth={3} />
+          <div className="w-32 h-32 bg-[var(--color-secondary-200)] rounded-full flex items-center justify-center mb-6 shadow-lg relative">
+            
+            <UserPlus className="w-16 h-16 text-[var(--color-secondary-500)]" />
+            
+            <div className="absolute bottom-4 right-4 bg-[var(--color-secondary-500)] rounded-full p-1 border-4 border-[var(--color-secondary-200)]">
+              <Check className="w-5 h-5 text-white" strokeWidth={3} />
             </div>
           </div>
 
-          {/* Texto de éxito idéntico al diseño */}
-          <h2 className=
-                "text-white text-2xl font-serif italic tracking-wide drop-shadow-md">
-                El usuario ha sido creado con éxito
+          <h2 className="text-white text-2xl font-serif italic tracking-wide drop-shadow-md">
+            El usuario ha sido creado con éxito
           </h2>
         </div>
       )}
 
-     
       {/* --- COLUMNA IZQUIERDA (Sidebar Naranja) --- */}
       <div className="w-1/4 bg-[var(--color-secondary-500)] flex flex-col items-center justify-between py-12 px-6">
-  
         {/* Contenedor del Avatar usando FileInput */}
-            <div className="w-32 h-32 bg-[var(--color-background)] rounded-full flex items-center justify-center shadow-sm overflow-hidden border-4 border-white">
-                <FileInput 
-                value={formData.userImage}
-                onChange={(files) => setFormData(prev => ({ ...prev, userImage: files }))}
-                multiple={false}
-                accept="image/jpeg, image/jpg, image/png, image/webp"
-                />
+        <div
+          className={`
+            relative w-32 h-32 flex items-center justify-center
+            bg-[var(--color-background)] rounded-full shadow-sm 
+            overflow-hidden border-4 border-white
+            [&_.w-24]:!w-32 [&_.h-24]:!h-32 
+            [&_.border-dashed]:!border-transparent [&_.text-blue-500]:!hidden
+            ${formData.userImage?.length > 0 ? "[&>div>div:last-child]:!hidden" : ""}
+          `}
+        >
+          {/* Overlay personalizado: Ícono y texto */}
+          {(!formData.userImage || formData.userImage.length === 0) && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 bg-[var(--color-background)]">
+              <User className="w-8 h-8 mb-1 text-gray-400" />
+              <span className="text-xs font-medium text-gray-500">Subir imagen</span>
             </div>
-  
-            <button
-             type="button"
-            onClick={() => navigate(-1)}
-            className="flex flex-col items-center text-[var(--color-text-inverse)] font-[var(--font-weight-heading)] text-[var(--text-subtitle)] hover:opacity-90 transition-opacity"
-            >
-            <ArrowLeft className="w-10 h-10 mb-2" />
-            
-                 Regresar
-             </button>
+          )}
+
+          {/* Componente FileInput real */}
+          <div className="absolute inset-0 z-0 flex items-center justify-center">
+            <FileInput
+              value={formData.userImage}
+              onChange={(files) => setFormData((prev) => ({ ...prev, userImage: files }))}
+              multiple={false}
+              accept="image/jpeg, image/jpg, image/png, image/webp"
+            />
+          </div>
         </div>
 
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="flex flex-col items-center text-[var(--color-text-inverse)] font-[var(--font-weight-heading)] text-[var(--text-subtitle)] hover:opacity-90 transition-opacity"
+        >
+          <ArrowLeft className="w-10 h-10 mb-2" />
+          Regresar
+        </button>
+      </div>
+
       {/* --- ÁREA DEL FORMULARIO --- */}
-      <div className=
-            "w-3/4 p-10 py-12 bg-[var(--color-background)]">
+      <div className="w-3/4 p-10 py-12 bg-[var(--color-background)]">
         <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between">
-          
           <div className="grid grid-cols-3 gap-8">
             
             {/* 1: PERSONALES */}
-            <div className="space-y-6">
-              <h3 className=
-                    "text-[var(--text-subtitle)] font-[var(--font-weight-heading)] text-[var(--color-text-muted)] flex items-center gap-3 mb-6 uppercase">
-                <span className=
-                    "bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] rounded-full w-8 h-8 flex items-center justify-center text-[var(--text-small)] shadow-sm">
-                    1
-                </span> 
+            <div className="space-y-6 [&>div]:!w-full">
+              <h3 className="text-[var(--text-subtitle)] font-[var(--font-weight-heading)] text-[var(--color-text-muted)] flex items-center gap-3 mb-6 uppercase">
+                <span className="bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] rounded-full w-8 h-8 flex items-center justify-center text-[var(--text-small)] shadow-sm">
+                  1
+                </span>
                 Personales
               </h3>
-              <Input 
-                  variant="primary" 
-                  size="md" 
-                  label="Nombres" 
-                  htmlFor="nombres" 
-                  name="nombres" 
-                  value={formData.nombres} 
-                  onChange={handleChange} 
-                  error={errors.nombres} 
-                  placeholder="Ingresa tu Nombre" />
-              <Input 
-                variant="primary"
+              <Input
+                variant="primary" 
+                size="md" 
+                label="Nombres" 
+                htmlFor="userName" 
+                name="userName"
+                value={formData.userName} 
+                onChange={handleChange} 
+                error={errors.userName} 
+                placeholder="Ingresa tu Nombre"
+              />
+              <Input
+                variant="primary" 
                 size="md" 
                 label="Apellidos" 
-                tmlFor="apellidos" 
-                name="apellidos" 
-                value={formData.apellidos} 
+                htmlFor="userLastName" 
+                name="userLastName"
+                value={formData.userLastName} 
                 onChange={handleChange} 
-                error={errors.apellidos} 
-                placeholder="Enter your apellidos here" />
-              <Select 
+                error={errors.userLastName} 
+                placeholder="Ingresa tus apellidos"
+              />
+              <Select
                 label="Tipo de Documento" 
-                htmlFor="tipoDocumento" 
-                name="tipoDocumento" 
-                value={formData.tipoDocumento} 
+                htmlFor="userDocumentTypes" 
+                name="userDocumentTypes"
+                value={formData.userDocumentTypes} 
                 onChange={handleChange} 
-                error={errors.tipoDocumento} 
-              options={[{ label: "Cédula", value: "cc" }, { label: "Pasaporte", value: "pasaporte" }]} />
-              <Input 
+                error={errors.userDocumentTypes}
+                options={[{ label: "Cédula", value: "cc" }, { label: "Pasaporte", value: "pasaporte" }]}
+              />
+              <Input
                 variant="primary" 
                 size="md" 
                 label="Número de Documento" 
-                htmlFor="numeroDocumento" 
-                name="numeroDocumento" 
-                value={formData.numeroDocumento} 
+                htmlFor="userDocumentNumber" 
+                name="userDocumentNumber"
+                value={formData.userDocumentNumber} 
                 onChange={handleChange} 
-                error={errors.numeroDocumento} 
-                placeholder="Enter your numero de documento" />
-              <Input 
+                error={errors.userDocumentNumber} placeholder="Ingresa tu documento"
+              />
+              <Input
                 variant="primary" 
                 size="md" 
                 label="Correo Electrónico" 
-                htmlFor="correo" 
-                name="correo" 
-                type="email" 
-                value={formData.correo} 
+                htmlFor="userEmail" 
+                name="userEmail" 
+                type="email"
+                value={formData.userEmail} 
                 onChange={handleChange} 
-                error={errors.correo} 
-                placeholder="Enter your correo electronico" />
-              </div>
+                error={errors.userEmail} 
+                placeholder="Ingresa tu correo"
+              />
+            </div>
 
             {/* 2: EMPRESARIALES */}
-            <div className="space-y-6">
-              <h3 className=
-                    "text-[var(--text-subtitle)] font-[var(--font-weight-heading)] text-[var(--color-text-muted)] flex items-center gap-3 mb-6 uppercase">
-                <span className=
-                        "bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] rounded-full w-8 h-8 flex items-center justify-center text-[var(--text-small)] shadow-sm">
-                        2
-                </span> 
+            <div className="space-y-6 [&>div]:!w-full">
+              <h3 className="text-[var(--text-subtitle)] font-[var(--font-weight-heading)] text-[var(--color-text-muted)] flex items-center gap-3 mb-6 uppercase">
+                <span className="bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] rounded-full w-8 h-8 flex items-center justify-center text-[var(--text-small)] shadow-sm">
+                  2
+                </span>
                 Empresariales
               </h3>
-              <Input 
-                  variant="primary" 
-                  size="md" 
-                  label="Correo Empresarial" 
-                  htmlFor="correoEmpresarial" 
-                  name="correoEmpresarial" 
-                  type="email" 
-                  value={formData.correoEmpresarial} 
-                  onChange={handleChange} 
-                  error={errors.correoEmpresarial} 
-                  placeholder="Enter your Full Name here" />
-              <Input 
-                  variant="primary" 
-                  size="md" 
-                  label="Número Telefónico" 
-                  htmlFor="telefono" 
-                  name="telefono" 
-                  value={formData.telefono} 
-                  onChange={handleChange} 
-                  error={errors.telefono} 
-                  placeholder="Enter your Full Name here" />
-              <Input 
+              <Input
+                variant="primary" 
+                size="md" 
+                label="Correo Empresarial" 
+                htmlFor="businessEmail" 
+                name="businessEmail" 
+                type="email"
+                value={formData.businessEmail} 
+                onChange={handleChange} 
+                error={errors.businessEmail} 
+                placeholder="Correo de la empresa"
+              />
+              <Input
+                variant="primary" 
+                size="md" 
+                label="Número Telefónico" 
+                htmlFor="userPhone" 
+                name="userPhone"
+                value={formData.userPhone} 
+                onChange={handleChange} 
+                error={errors.userPhone}
+                placeholder="Número de contacto"
+              />
+              <Input
                 variant="primary" 
                 size="md" 
                 label="Fecha Inicio Laboral" 
-                htmlFor="fechaInicio" 
-                name="fechaInicio" 
-                type="date" 
-                value={formData.fechaInicio} 
+                htmlFor="startDate" 
+                name="startDate" type="date"
+                value={formData.startDate} 
                 onChange={handleChange} 
-                error={errors.fechaInicio} 
-                placeholder="Enter your Full Name here" />
-              <Input 
+                error={errors.startDate}
+              />
+              <Input
                 variant="primary" 
                 size="md" 
-                label="Fecha Fin Laboral"
-                htmlFor="fechaFin" 
-                name="fechaFin" 
-                type="date" 
-                value={formData.fechaFin} 
+                label="Fecha Fin Laboral" 
+                htmlFor="endDate" 
+                name="endDate" 
+                type="date"
+                value={formData.endDate} 
                 onChange={handleChange} 
-                error={errors.fechaFin} 
-                placeholder="Enter your Full Name here" />
-              <Input 
+                error={errors.endDate}
+              />
+              <Input
                 variant="primary" 
-                size="md" 
-                label="Dirección" 
-                htmlFor="direccion" 
-                name="direccion" 
-                value={formData.direccion} 
+                size="md" label="Dirección" 
+                htmlFor="address" 
+                name="address"
+                value={formData.address} 
                 onChange={handleChange} 
-                error={errors.direccion} 
-                placeholder="Enter your Full Name here" />
+                error={errors.address} 
+                placeholder="Dirección de residencia"
+              />
             </div>
 
             {/* 3: SENSIBLES */}
-            <div className="space-y-6">
-              <h3 className=
-                  "text-[var(--text-subtitle)] font-[var(--font-weight-heading)] text-[var(--color-text-muted)] flex items-center gap-3 mb-6 uppercase">
-                <span className=
-                  "bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] rounded-full w-8 h-8 flex items-center justify-center text-[var(--text-small)] shadow-sm">3
-                </span> 
+            <div className="space-y-6 [&>div]:!w-full">
+              <h3 className="text-[var(--text-subtitle)] font-[var(--font-weight-heading)] text-[var(--color-text-muted)] flex items-center gap-3 mb-6 uppercase">
+                <span className="bg-[var(--color-surface-muted)] text-[var(--color-text-primary)] rounded-full w-8 h-8 flex items-center justify-center text-[var(--text-small)] shadow-sm">
+                  3
+                </span>
                 Sensibles
               </h3>
-              <Input 
-                variant="primary" 
-                size="md" 
+              <Select
                 label="Estado" 
-                htmlFor="estado" 
-                name="estado" 
-                value={formData.estado} 
+                htmlFor="isActive" 
+                name="isActive"
+                value={formData.isActive} 
                 onChange={handleChange} 
-                rror={errors.estado} 
-                placeholder="Enter your Full Name here" />
-              <Select 
+                error={errors.isActive}
+                options={[{ label: "Activo", value: true }, { label: "Inactivo", value: false }]}
+              />
+              <Select
                 label="Tipo de Usuario" 
-                htmlFor="tipoUsuario" 
-                name="tipoUsuario" 
-                value={formData.tipoUsuario} 
+                htmlFor="role" 
+                name="role"
+                value={formData.role} 
                 onChange={handleChange} 
-                error={errors.tipoUsuario} 
-                options={[{ label: "Administrador", value: "admin" }, { label: "Empleado", value: "employee" }]} />
-              <Input 
+                error={errors.role}
+                options={[{ label: "Administrador", value: "admin" }, { label: "Empleado", value: "employee" }]}
+              />
+              <Input
                 variant="primary" 
                 size="md" 
-                label="ID Usuario" 
+                label="ID Usuario"
                 htmlFor="idUsuario" 
-                name="idUsuario" 
-                value={formData.idUsuario} 
+                name="idUsuario"
+                value={formData.idUsuario}
                 onChange={handleChange} 
-                error={errors.idUsuario} 
-                placeholder="Enter your Full Name here" />
-              <Input 
+                error={errors.idUsuario}
+                placeholder="ID único"
+              />
+              <Input
                 variant="primary" 
                 size="md" 
                 label="Contraseña" 
-                htmlFor="contrasena" 
-                name="contraseña" 
-                type="password" 
-                value={formData.contrasena} 
+                htmlFor="userPassword" 
+                name="userPassword" 
+                type="password"
+                value={formData.userPassword}
                 onChange={handleChange} 
-                error={errors.contrasena} 
-                placeholder="Ingrese su Contraseña" />
+                error={errors.userPassword} 
+                placeholder="Ingrese su contraseña"
+              />
             </div>
-            
           </div>
 
           <div className="flex justify-end mt-8">
-            <Button 
-            type="submit" 
-            variant="primary" 
-            size="md" 
-            className=
-              "w-40 shadow-sm rounded-full bg-[var(--color-secondary-500)] hover:bg-[var(--color-secondary-600)] border-none">
+            <Button
+              type="submit"
+              variant="primary"
+              size="md"
+              className="w-40 shadow-sm rounded-full bg-[var(--color-secondary-500)] hover:bg-[var(--color-secondary-600)] border-none"
+            >
               GUARDAR
             </Button>
           </div>

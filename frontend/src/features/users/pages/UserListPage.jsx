@@ -1,14 +1,18 @@
 ﻿// src/users/pagesUserListPage.js
 
 import { useState } from "react";
-import { DataTable, Button } from "@/shared";
+import { useNavigate } from "react-router-dom";
+import { DataTable, Button, Select, SearchField } from "@/shared";
 import { UserColumns } from "../table/UserColumns";
 import { users } from "../data/users";
 import { Link } from "react-router-dom";
 import ReportConfigModal from "../reports/components/ReportConfigModal";
+import { LayoutGrid, List, Filter, Plus } from "lucide-react";
+
 
 export default function UserListPage() {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   return (
     // Contenedor principal con efecto Glassmorphism basado en Figma
