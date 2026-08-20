@@ -4,6 +4,7 @@ import { AuthLayout, DashboardLayout, } from "@/shared";
 import { UserListPage, UserRegisterForm } from "@/features/users";
 import  Login  from "@/features/auth/Login";
 import HomePage from "@/features/home/page/HomePage";
+import { InventoryCreateForm } from "../features/inventory";
 
 const  router = createBrowserRouter([
     {
@@ -39,6 +40,7 @@ const  router = createBrowserRouter([
             // { path: "/dashboard/auth", element: <h1>Hello2</h1>},
             { path: "userList", element: <UserListPage />},
             { path: "userCreate", element: <UserRegisterForm />},
+            { path: "inventoryCreate", element: <InventoryCreateForm />},
             { path: "Home", element: <HomePage />},
         ],
     },
