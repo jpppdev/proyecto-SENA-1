@@ -2,6 +2,7 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";   
 import { AuthLayout, DashboardLayout, } from "@/shared";
 import { UserListPage, UserRegisterForm, ViewUser } from "@/features/users";
+import { ViewInventory } from "@/features/inventory";
 import  Login  from "@/features/auth/Login";
 import HomePage from "@/features/home/page/HomePage";
 
@@ -41,6 +42,7 @@ const  router = createBrowserRouter([
             { path: "ViewUser/:id", element: <ViewUser /> },
             { path: "userCreate", element: <UserRegisterForm />},
             { path: "Home", element: <HomePage />},
+            { path: "ViewInventory/:id", element: < ViewInventory />},
         ],
     },
 ]);

@@ -35,7 +35,7 @@ export default function Navbar(){
         <div className="flex h-16 items-center justify-between">
 
           {/* Logo de marca */}
-          <div className=" hidden sm:block items-center">
+          <div className="hidden sm:block items-center">
             <Link to={"/dashboard"} className="text-h1 font-heading">
               <img src={logo} alt="logo" className="h-12" />
             </Link>

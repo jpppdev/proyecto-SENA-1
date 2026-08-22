@@ -1,0 +1,1 @@
+export { default as ViewInventory } from "./components/ViewInventory";
