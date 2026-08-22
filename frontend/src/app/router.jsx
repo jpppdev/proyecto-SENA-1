@@ -1,7 +1,7 @@
 // src/app/router.jsx
 import { createBrowserRouter, Navigate } from "react-router-dom";   
 import { AuthLayout, DashboardLayout, } from "@/shared";
-import { UserListPage, UserRegisterForm } from "@/features/users";
+import { UserListPage, UserRegisterForm, ViewUser } from "@/features/users";
 import  Login  from "@/features/auth/Login";
 import HomePage from "@/features/home/page/HomePage";
 
@@ -38,6 +38,7 @@ const  router = createBrowserRouter([
             {index: true},
             // { path: "/dashboard/auth", element: <h1>Hello2</h1>},
             { path: "userList", element: <UserListPage />},
+            { path: "ViewUser/:id", element: <ViewUser /> },
             { path: "userCreate", element: <UserRegisterForm />},
             { path: "Home", element: <HomePage />},
         ],
