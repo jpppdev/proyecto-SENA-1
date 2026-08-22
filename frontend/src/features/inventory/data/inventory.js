@@ -10,7 +10,7 @@ export const inventoryData = [
         quantity: 50,
         minQuantity: 10,
         unitValue: 25000,
-        totalValue: 1250000, // quantity * unitValue
+        totalValue: 1250000, 
         status: "disponible",
         lotNumber: 1
     },

@@ -1,14 +1,54 @@
 import { z } from "zod";
-import { fileSchema } from "@/shared/schemas/fileSchema";
 
 export const inventorySchema = z.object({
-    productName: z.string().min(3, "El nombre debe tener mínimo 3 caracteres"),
-    barcode: z.string().min(3, "El código de barras es requerido"),
-    brand: z.string().min(1, "La marca es obligatoria"),
-    accountable: z.string().min(1, "Debe asignar un cuentadante"),
-    quantity: z.coerce.number().min(0, "La cantidad no puede ser negativa"),
-    minQuantity: z.coerce.number().min(1, "Defina la cantidad mínima para alertas"),
-    unitValue: z.coerce.number().min(1, "El valor unitario debe ser mayor a 0"),
-    status: z.string().min(1, "El estado es requerido"),
-    productImage: fileSchema.pick({ files: true }).shape.files.optional(),
+
+    productName: z
+        .string()
+        .min(3, "El nombre del producto debe tener al menos 3 caracteres"),
+
+    category: z
+        .string()
+        .min(1, "Seleccione una categoría"),
+
+    sku: z
+        .string()
+        .optional(),
+
+    description: z
+        .string()
+        .max(200, "La descripción es demasiado larga")
+        .optional(),
+
+    initialQuantity: z
+        .string()
+        .regex(/^\d+$/, "La cantidad inicial debe contener solo números"),
+
+    unit: z
+        .string()
+        .min(1, "Seleccione una unidad de medida"),
+
+    minStock: z
+        .string()
+        .regex(/^\d+$/, "El stock mínimo debe contener solo números"),
+
+    maxStock: z
+        .string()
+        .regex(/^\d*$/, "El stock máximo debe contener solo números")
+        .optional(),
+
+    status: z.boolean(),
+
+    provider: z
+        .string()
+        .min(1, "Seleccione un proveedor"),
+
+    expirationDate: z
+        .string()
+        .optional(),
+
+    notes: z
+        .string()
+        .max(200, "Las notas son demasiado largas")
+        .optional(),
+
 });

@@ -121,6 +121,11 @@ export default function Navbar(){
               Crear inventario
             </Link>
           </DropdownItem>
+          <DropdownItem>
+            <Link to="/dashboard/ProviderCreate" className="block w-full">
+              Crear Proveedor
+            </Link>
+          </DropdownItem>
             
           <DropdownItem>
             Cerrar Sesión

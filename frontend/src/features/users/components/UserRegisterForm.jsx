@@ -84,7 +84,7 @@ export default function UserRegisterForm (){
 
         //Validamos los datos del formulario contra el esquema Zod
         //saFeParse NO lanza exceptcion, retorna un objeto controlado
-        const result = userSchema.safeParse(FormData);
+        const result = userSchema.safeParse(formData);
 
         //Verificar en consola si el esquema está funcionado correctamente 
         // console.log(result);
