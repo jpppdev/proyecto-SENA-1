@@ -116,6 +116,16 @@ export default function Navbar(){
               Listar usuarios
             </Link>
           </DropdownItem>
+          <DropdownItem>
+            <Link to="/dashboard/inventoryCreate" className="block w-full">
+              Crear inventario
+            </Link>
+          </DropdownItem>
+          <DropdownItem>
+            <Link to="/dashboard/ProviderCreate" className="block w-full">
+              Crear Proveedor
+            </Link>
+          </DropdownItem>
             
           <DropdownItem>
             Cerrar Sesión
